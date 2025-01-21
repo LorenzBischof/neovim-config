@@ -99,6 +99,11 @@ in
     plugins = all-plugins;
     inherit extraPackages;
   };
+  nvim-pkg-unwrapped = mkNeovim {
+    plugins = all-plugins;
+    inherit extraPackages;
+    wrapRc = false;
+  };
 
   # This can be symlinked in the devShell's shellHook
   nvim-luarc-json = final.mk-luarc-json {

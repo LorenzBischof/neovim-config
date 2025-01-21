@@ -55,11 +55,14 @@
             nil
             stylua
             luajitPackages.luacheck
+            nvim-pkg-unwrapped
           ];
           shellHook = ''
             # symlink the .luarc.json generated in the overlay
             ln -fs ${pkgs.nvim-luarc-json} .luarc.json
+            ln -fsn $PWD/nvim ~/.config/nvim-pkg
           '';
+          NVIM_APPNAME = "nvim-pkg";
         };
       in
       {
