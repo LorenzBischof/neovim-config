@@ -82,6 +82,7 @@ let
     which-key-nvim
     base16-nvim
     conform-nvim
+    lazydev-nvim
   ];
 
   extraPackages = with pkgs; [
@@ -101,11 +102,6 @@ in
     plugins = all-plugins;
     inherit extraPackages;
     wrapRc = false;
-  };
-
-  # This can be symlinked in the devShell's shellHook
-  nvim-luarc-json = final.mk-luarc-json {
-    plugins = all-plugins;
   };
 
   # You can add as many derivations as you like.
