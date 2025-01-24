@@ -1,8 +1,3 @@
-if vim.g.did_load_keymaps_plugin then
-  return
-end
-vim.g.did_load_keymaps_plugin = true
-
 local keymap = vim.keymap
 
 -- Yank from current position till end of current line

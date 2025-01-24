@@ -1,8 +1,3 @@
-if vim.g.did_load_telescope_plugin then
-  return
-end
-vim.g.did_load_telescope_plugin = true
-
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {}
 

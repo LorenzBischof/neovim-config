@@ -1,8 +1,3 @@
-if vim.g.did_load_conform_plugin then
-  return
-end
-vim.g.did_load_conform_plugin = true
-
 local keymap = vim.keymap
 
 keymap.set('n', '<leader>tf', function()
