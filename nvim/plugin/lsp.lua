@@ -11,9 +11,9 @@ local keymap = vim.keymap
 -- This must be executed before any language servers
 local lspconfig_defaults = require('lspconfig').util.default_config
 lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-    'force',
-    lspconfig_defaults.capabilities,
-    require('cmp_nvim_lsp').default_capabilities()
+  'force',
+  lspconfig_defaults.capabilities,
+  require('cmp_nvim_lsp').default_capabilities()
 )
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -75,19 +75,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 vim.diagnostic.config {
-     signs = {
+  signs = {
     text = { ERROR = '', WARN = '', INFO = '', HINT = '' }
   },
 }
-
--- Formatting
-require("conform").setup({
-    format_on_save = {
-        -- These options will be passed to conform.format()
-        timeout_ms = 500,
-        lsp_format = "fallback",
-    },
-})
 
 -- Nix
 require('lspconfig').nil_ls.setup {}
