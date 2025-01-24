@@ -43,21 +43,21 @@ cmp.setup {
             require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
         end,
     },
-    mapping = {
+    mapping = cmp.mapping.preset.insert {
         ['<C-b>'] = cmp.mapping(function(_)
             if cmp.visible() then
                 cmp.scroll_docs(-4)
             else
                 complete_with_source('buffer')
             end
-        end, { 'i', 'c', 's' }),
+        end, { 'i', 's' }),
         ['<C-f>'] = cmp.mapping(function(_)
             if cmp.visible() then
                 cmp.scroll_docs(4)
             else
                 complete_with_source('path')
             end
-        end, { 'i', 'c', 's' }),
+        end, { 'i', 's' }),
         ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
@@ -70,7 +70,7 @@ cmp.setup {
             else
                 fallback()
             end
-        end, { 'i', 'c', 's' }),
+        end, { 'i', 's' }),
         ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
@@ -79,7 +79,7 @@ cmp.setup {
             else
                 fallback()
             end
-        end, { 'i', 'c', 's' }),
+        end, { 'i', 's' }),
         ['<C-n>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
@@ -92,7 +92,7 @@ cmp.setup {
             else
                 fallback()
             end
-        end, { 'i', 'c', 's' }),
+        end, { 'i', 's' }),
         ['<C-p>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
@@ -101,18 +101,7 @@ cmp.setup {
             else
                 fallback()
             end
-        end, { 'i', 'c', 's' }),
-        -- toggle completion
-        ['<C-e>'] = cmp.mapping(function(_)
-            if cmp.visible() then
-                cmp.close()
-            else
-                cmp.complete()
-            end
-        end, { 'i', 'c', 's' }),
-        ['<C-y>'] = cmp.mapping.confirm {
-            select = true,
-        },
+        end, { 'i', 's' }),
         ['<CR>'] = cmp.mapping.confirm {
             select = false,
         },
@@ -125,53 +114,4 @@ cmp.setup {
         { name = 'buffer' },
         { name = 'path' },
     },
-    enabled = function()
-        return vim.bo[0].buftype ~= 'prompt'
-    end,
 }
-
-cmp.setup.filetype('lua', {
-    sources = cmp.config.sources {
-        { name = 'nvim_lua' },
-        { name = 'nvim_lsp', keyword_length = 3 },
-        { name = 'path' },
-    },
-})
-
--- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline({ '/', '?' }, {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-        { name = 'nvim_lsp_document_symbol', keyword_length = 3 },
-        { name = 'buffer' },
-        { name = 'cmdline_history' },
-    },
-    view = {
-        entries = { name = 'wildmenu', separator = '|' },
-    },
-})
-
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources {
-        { name = 'cmdline' },
-        { name = 'cmdline_history' },
-        { name = 'path' },
-    },
-})
-
-
-vim.keymap.set({ 'i', 'c', 's' }, '<C-n>', cmp.complete, { noremap = false, desc = '[cmp] complete' })
-vim.keymap.set({ 'i', 'c', 's' }, '<C-f>', function()
-    complete_with_source('path')
-end, { noremap = false, desc = '[cmp] path' })
-vim.keymap.set({ 'i', 'c', 's' }, '<C-o>', function()
-    complete_with_source('nvim_lsp')
-end, { noremap = false, desc = '[cmp] lsp' })
-vim.keymap.set({ 'c' }, '<C-h>', function()
-    complete_with_source('cmdline_history')
-end, { noremap = false, desc = '[cmp] cmdline history' })
-vim.keymap.set({ 'c' }, '<C-c>', function()
-    complete_with_source('cmdline')
-end, { noremap = false, desc = '[cmp] cmdline' })

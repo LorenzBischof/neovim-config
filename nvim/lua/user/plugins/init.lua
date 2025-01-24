@@ -1,4 +1,4 @@
-require('user.plugins.completion')
+require('user.plugins.cmp')
 require('user.plugins.conform')
 require('user.plugins.eyeliner')
 require('user.plugins.gitsigns')
