@@ -98,11 +98,6 @@ in
     plugins = all-plugins;
     inherit extraPackages;
   };
-  nvim-pkg-unwrapped = mkNeovim {
-    plugins = all-plugins;
-    inherit extraPackages;
-    wrapRc = false;
-  };
 
   # You can add as many derivations as you like.
   # Use `ignoreConfigRegexes` to filter out config

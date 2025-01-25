@@ -36,7 +36,6 @@ with lib;
   viAlias ? appName == null || appName == "nvim",
   # Add a "vim" binary to the build output as an alias?
   vimAlias ? appName == null || appName == "nvim",
-  wrapRc ? true,
 }:
 let
   # This is the structure of a plugin definition.
@@ -200,7 +199,7 @@ let
         + extraMakeWrapperLuaCArgs
         + " "
         + extraMakeWrapperLuaArgs;
-      wrapRc = wrapRc;
+      wrapRc = true;
     }
   );
 

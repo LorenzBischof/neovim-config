@@ -49,12 +49,13 @@
             nil
             stylua
             luajitPackages.luacheck
-            nvim-pkg-unwrapped
+            (nvim-pkg.override (prev: {
+              wrapRc = false;
+            }))
           ];
           shellHook = ''
-            ln -fsn $PWD/nvim ~/.config/nvim-pkg
+            ln -Tfns $PWD/nvim ~/.config/nvim
           '';
-          NVIM_APPNAME = "nvim-pkg";
         };
       in
       {
