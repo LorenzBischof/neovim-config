@@ -68,6 +68,13 @@ let
     vim-sleuth
     avante-nvim
     # ^ navigation/editing enhancement plugins
+    # debugging
+    nvim-dap
+    nvim-dap-go
+    nvim-dap-rego
+    nvim-dap-virtual-text
+    nvim-dap-ui             # 
+    # ^ debugging
     # Useful utilities
     nvim-unception # Prevent nested neovim sessions | nvim-unception
     # ^ Useful utilities
@@ -90,6 +97,7 @@ let
     # language servers, etc.
     lua-language-server
     nil # nix LSP
+    delve
   ];
 in
 {
