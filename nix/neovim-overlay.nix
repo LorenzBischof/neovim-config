@@ -66,7 +66,10 @@ let
     nvim-treesitter-textobjects # https://github.com/nvim-treesitter/nvim-treesitter-textobjects/
     nvim-ts-context-commentstring # https://github.com/joosepalviste/nvim-ts-context-commentstring/
     vim-sleuth
-    avante-nvim
+    {
+      plugin = avante-nvim;
+      optional = true;
+    }
     # ^ navigation/editing enhancement plugins
     # debugging
     nvim-dap
@@ -83,6 +86,7 @@ let
     plenary-nvim
     nvim-web-devicons
     vim-repeat
+    lz-n
     # ^ libraries that other plugins depend on
     # bleeding-edge plugins from flake inputs
     # (mkNvimPlugin inputs.wf-nvim "wf.nvim") # (example) keymap hints | https://github.com/Cassin01/wf.nvim
