@@ -17,6 +17,8 @@ local function complete_with_source(source)
     end
 end
 
+vim.opt.completeopt = { 'menu,menuone,noselect' }
+
 cmp.setup {
     completion = {
         completeopt = 'menu,menuone,noselect,preview',
@@ -35,6 +37,7 @@ cmp.setup {
                 nvim_lua = '[API]',
                 path = '[PATH]',
                 luasnip = '[SNIP]',
+                omni = '[OMNI]',
             },
         },
     },
@@ -119,3 +122,9 @@ cmp.setup {
         { name = 'path' },
     },
 }
+
+cmp.setup.filetype("beancount", {
+    sources = {
+        { name = 'omni' },
+    }
+})

@@ -11,6 +11,9 @@ keymap.set('n', '<leader>tf', function()
 end, { desc = "[T]oggle [F]ormatting" })
 
 require("conform").setup({
+  formatters_by_ft = {
+    beancount = { "bean-format" },
+  },
   format_on_save = function(bufnr)
     if vim.b[bufnr].disable_autoformat then
       return
