@@ -105,6 +105,7 @@ let
     nil # nix LSP
     delve
     beancount
+    nixfmt-rfc-style
   ];
 in
 {

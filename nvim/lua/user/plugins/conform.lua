@@ -13,6 +13,7 @@ end, { desc = "[T]oggle [F]ormatting" })
 require("conform").setup({
   formatters_by_ft = {
     beancount = { "bean-format" },
+    nix = { "nixfmt" },
   },
   format_on_save = function(bufnr)
     if vim.b[bufnr].disable_autoformat then
