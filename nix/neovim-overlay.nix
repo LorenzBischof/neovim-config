@@ -77,7 +77,7 @@ let
     nvim-dap-go
     nvim-dap-rego
     nvim-dap-virtual-text
-    nvim-dap-ui             # 
+    nvim-dap-ui
     # ^ debugging
     # Useful utilities
     nvim-unception # Prevent nested neovim sessions | nvim-unception
@@ -114,6 +114,9 @@ in
   nvim-pkg = mkNeovim {
     plugins = all-plugins;
     inherit extraPackages;
+    extraPython3Packages = p: [
+      p.regex # This is required by the beancount omni completion
+    ];
   };
 
   # You can add as many derivations as you like.
