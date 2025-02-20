@@ -1,4 +1,5 @@
 # This overlay, when applied to nixpkgs, adds the final neovim derivation to nixpkgs.
+
 { inputs }:
 final: prev:
 with final.pkgs.lib;
@@ -61,6 +62,7 @@ let
     statuscol-nvim # Status column | https://github.com/luukvbaal/statuscol.nvim/
     # ^ UI
     # language support
+    rustaceanvim
     lsp-progress-nvim
     # ^ language support
     # navigation/editing enhancement plugins
@@ -107,6 +109,7 @@ let
     delve
     beancount
     nixfmt-rfc-style
+    rust-analyzer
   ];
 in
 {
