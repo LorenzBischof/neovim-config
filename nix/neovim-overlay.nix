@@ -61,6 +61,7 @@ let
     statuscol-nvim # Status column | https://github.com/luukvbaal/statuscol.nvim/
     # ^ UI
     # language support
+    lsp-progress-nvim
     # ^ language support
     # navigation/editing enhancement plugins
     eyeliner-nvim # Highlights unique characters for f/F and t/T motions | https://github.com/jinh0/eyeliner.nvim
