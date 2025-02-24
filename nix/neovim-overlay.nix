@@ -101,6 +101,7 @@ let
     base16-nvim
     conform-nvim
     lazydev-nvim
+    indent-blankline-nvim
   ];
 
   extraPackages = with pkgs; [
