@@ -113,6 +113,7 @@ let
     beancount
     nixfmt-rfc-style
     rust-analyzer
+    regal
   ];
 in
 {

@@ -14,6 +14,11 @@ lspconfig_defaults.capabilities = vim.tbl_deep_extend(
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
   callback = function(event)
+    vim.lsp.codelens.refresh()
+    vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
+      callback = vim.lsp.codelens.refresh,
+    })
+
     local map = function(keys, func, desc, mode)
       mode = mode or 'n'
       vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
@@ -51,6 +56,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Execute a code action, usually your cursor needs to be on top of an error
     -- or a suggestion from your LSP for this to activate.
     map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
+    map('<leader>cl', vim.lsp.codelens.run, '[C]ode [L]ens', { 'n', 'x' })
 
     -- WARN: This is not Goto Definition, this is Goto Declaration.
     --  For example, in C this would take you to the header.
@@ -80,3 +86,11 @@ require('lspconfig').nil_ls.setup {}
 
 -- Lua
 require('lspconfig').lua_ls.setup {}
+
+-- Rego
+require('lspconfig').regal.setup({
+  init_options = {
+    enableDebugCodelens = true,
+    evalCodelensDisplayInline = true,
+  },
+})
