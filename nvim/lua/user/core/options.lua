@@ -11,6 +11,11 @@ opt.wrap = false
 opt.number = true
 opt.relativenumber = true
 
+opt.expandtab = true
+opt.tabstop = 2
+opt.softtabstop = 2
+opt.shiftwidth = 2
+
 -- Enable mouse mode, can be useful for resizing splits for example!
 opt.mouse = 'a'
 
@@ -48,6 +53,8 @@ opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 opt.scrolloff = 1
+
+opt.winborder = 'rounded'
 
 
 cmd.colorscheme 'base16-eighties'

@@ -16,10 +16,12 @@ let
 
   # Make sure we use the pinned nixpkgs instance for wrapNeovimUnstable,
   # otherwise it could have an incompatible signature when applying this overlay.
-  pkgs-wrapNeovim = inputs.nixpkgs.legacyPackages.${pkgs.system};
+  pkgs-locked = inputs.nixpkgs.legacyPackages.${pkgs.system};
 
   # This is the helper function that builds the Neovim derivation.
-  mkNeovim = pkgs.callPackage ./mkNeovim.nix { inherit pkgs-wrapNeovim; };
+  mkNeovim = pkgs.callPackage ./mkNeovim.nix {
+    inherit (pkgs-locked) wrapNeovimUnstable neovimUtils;
+  };
 
   # A plugin can either be a package or an attrset, such as
   # { plugin = <plugin>; # the package, e.g. pkgs.vimPlugins.nvim-cmp
@@ -115,30 +117,26 @@ let
     rust-analyzer
     regal
   ];
+
+  extraPython3Packages = p: [
+    p.regex # This is required by the beancount omni completion
+  ];
 in
 {
   # This is the neovim derivation
   # returned by the overlay
   nvim-pkg = mkNeovim {
     plugins = all-plugins;
-    inherit extraPackages;
-    extraPython3Packages = p: [
-      p.regex # This is required by the beancount omni completion
-    ];
+    inherit extraPackages extraPython3Packages;
   };
 
-  # You can add as many derivations as you like.
-  # Use `ignoreConfigRegexes` to filter out config
-  # files you would not like to include.
-  #
-  # For example:
-  #
-  # nvim-pkg-no-telescope = mkNeovim {
-  #   plugins = [];
-  #   ignoreConfigRegexes = [
-  #     "^plugin/telescope.lua"
-  #     "^ftplugin/.*.lua"
-  #   ];
-  #   inherit extraPackages;
-  # };
+  # This is meant to be used within a devshell.
+  # Instead of loading the lua Neovim configuration from
+  # the Nix store, it is loaded from $XDG_CONFIG_HOME/nvim-dev
+  nvim-dev = mkNeovim {
+    plugins = all-plugins;
+    inherit extraPackages extraPython3Packages;
+    appName = "nvim-dev";
+    wrapRc = false;
+  };
 }

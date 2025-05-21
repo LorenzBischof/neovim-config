@@ -115,8 +115,8 @@ cmp.setup {
             name = "lazydev",
             group_index = 0, -- set group index to 0 to skip loading LuaLS completions
         },
-        { name = 'nvim_lsp',                keyword_length = 3 },
-        { name = 'nvim_lsp_signature_help', keyword_length = 3 },
+        { name = 'nvim_lsp' },
+        { name = 'nvim_lsp_signature_help' },
         { name = 'luasnip' },
         { name = 'buffer' },
         { name = 'path' },

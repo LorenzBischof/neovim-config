@@ -49,12 +49,10 @@
             nil
             stylua
             luajitPackages.luacheck
-            (nvim-pkg.override (prev: {
-              wrapRc = false;
-            }))
+            nvim-dev
           ];
           shellHook = ''
-            ln -Tfns $PWD/nvim ~/.config/nvim
+            ln -Tfns $PWD/nvim ~/.config/nvim-dev
           '';
         };
       in
