@@ -1,6 +1,5 @@
 require('user.plugins.cmp')
 require('user.plugins.conform')
-require('user.plugins.eyeliner')
 require('user.plugins.gitsigns')
 require('user.plugins.lsp')
 require('user.plugins.lualine')
