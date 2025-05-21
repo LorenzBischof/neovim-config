@@ -110,7 +110,7 @@ let
   extraPackages = with pkgs; [
     # language servers, etc.
     lua-language-server
-    nil # nix LSP
+    nixd
     delve
     beancount
     nixfmt-rfc-style

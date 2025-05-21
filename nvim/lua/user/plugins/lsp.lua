@@ -82,7 +82,15 @@ vim.diagnostic.config {
 }
 
 -- Nix
-require('lspconfig').nil_ls.setup {}
+require('lspconfig').nixd.setup {
+  settings = {
+    nixd = {
+      formatting = {
+        command = { "nixfmt" },
+      },
+    },
+  },
+}
 
 -- Lua
 require('lspconfig').lua_ls.setup {}
