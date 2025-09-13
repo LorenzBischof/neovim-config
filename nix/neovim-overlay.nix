@@ -79,7 +79,6 @@ let
     # language support
     rustaceanvim
     lsp-progress-nvim
-    codecompanion-nvim
     # ^ language support
     # navigation/editing enhancement plugins
     nvim-treesitter-textobjects # https://github.com/nvim-treesitter/nvim-treesitter-textobjects/
