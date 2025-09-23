@@ -81,6 +81,8 @@ vim.diagnostic.config {
   },
 }
 
+require("neoconf").setup {}
+
 -- Nix
 require('lspconfig').nixd.setup {
   settings = {

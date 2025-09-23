@@ -116,6 +116,7 @@ let
     lazydev-nvim
     indent-blankline-nvim
     vim-illuminate
+    neoconf-nvim
   ];
 
   extraPackages = with pkgs; [
