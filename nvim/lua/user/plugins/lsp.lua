@@ -1,15 +1,15 @@
 local api = vim.api
-
 local keymap = vim.keymap
 
--- Add cmp_nvim_lsp capabilities settings to lspconfig
--- This must be executed before any language servers
-local lspconfig_defaults = require('lspconfig').util.default_config
-lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-  'force',
-  lspconfig_defaults.capabilities,
-  require('cmp_nvim_lsp').default_capabilities()
-)
+vim.opt.completeopt = { 'menu,menuone,noselect,popup,fuzzy' }
+
+require("codesettings").setup {}
+vim.lsp.config('*', {
+  before_init = function(_, config)
+    local codesettings = require('codesettings')
+    config = codesettings.with_local_settings(config.name, config)
+  end,
+})
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
@@ -62,12 +62,47 @@ vim.api.nvim_create_autocmd('LspAttach', {
     --  For example, in C this would take you to the header.
     map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    if client and client:supports_method('textDocument/completion') then
+      vim.lsp.completion.enable(true, client.id, event.buf, {
+        autotrigger = true,
+        -- Remove function signature
+        --convert = function(item)
+        --  return { abbr = item.label:gsub("%b()", "") }
+        --end,
+      })
+      -- TODO: use autocomplete option with Neovim 0.12
+      vim.api.nvim_create_autocmd({ 'TextChangedI' }, {
+        buffer = event.buf,
+        callback = function()
+          vim.lsp.completion.get()
+        end
+      })
+      local pumMaps = {
+        ['<Tab>'] = '<C-n>',
+        ['<Down>'] = '<C-n>',
+        ['<S-Tab>'] = '<C-p>',
+        ['<Up>'] = '<C-p>',
+        ['<CR>'] = '<C-y>',
+      }
+
+      for insertKmap, pumKmap in pairs(pumMaps) do
+        vim.keymap.set(
+          { 'i' },
+          insertKmap,
+          function()
+            return vim.fn.pumvisible() == 1 and pumKmap or insertKmap
+          end,
+          { expr = true }
+        )
+      end
+    end
+
     -- The following code creates a keymap to toggle inlay hints in your
     -- code, if the language server you are using supports them
     --
     -- This may be unwanted, since they displace some of your code
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
-    if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
       map('<leader>th', function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
       end, '[T]oggle Inlay [H]ints')
@@ -76,15 +111,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 vim.diagnostic.config {
+  virtual_text = true,
+  -- virtual_lines = true,
   signs = {
     text = { ERROR = '', WARN = '', INFO = '', HINT = '' }
   },
 }
 
-require("neoconf").setup {}
-
 -- Nix
-require('lspconfig').nixd.setup {
+vim.lsp.enable('nixd')
+vim.lsp.config('nixd', {
   settings = {
     nixd = {
       formatting = {
@@ -92,13 +128,15 @@ require('lspconfig').nixd.setup {
       },
     },
   },
-}
+})
 
 -- Lua
-require('lspconfig').lua_ls.setup {}
+vim.lsp.enable('lua_ls')
+vim.lsp.config('lua_ls', {})
 
 -- Rego
-require('lspconfig').regal.setup({
+vim.lsp.enable('regal')
+vim.lsp.config('regal', {
   init_options = {
     enableDebugCodelens = true,
     evalCodelensDisplayInline = true,

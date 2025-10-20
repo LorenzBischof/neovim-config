@@ -1,4 +1,3 @@
-require('user.plugins.cmp')
 require('user.plugins.conform')
 require('user.plugins.gitsigns')
 require('user.plugins.lsp')
