@@ -123,6 +123,8 @@ let
     # language servers, etc.
     lua-language-server
     nixd
+    opentofu
+    tofu-ls
     delve
     beancount
     nixfmt

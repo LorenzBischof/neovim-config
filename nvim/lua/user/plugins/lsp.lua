@@ -134,6 +134,10 @@ vim.lsp.config('nixd', {
 vim.lsp.enable('lua_ls')
 vim.lsp.config('lua_ls', {})
 
+-- OpenTofu / Terraform
+vim.lsp.enable('tofu_ls')
+vim.lsp.config('tofu_ls', {})
+
 -- Rego
 vim.lsp.enable('regal')
 vim.lsp.config('regal', {
