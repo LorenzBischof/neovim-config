@@ -3,20 +3,28 @@ local keymap = vim.keymap
 
 vim.opt.completeopt = { 'menu,menuone,noselect,popup,fuzzy' }
 
-require("codesettings").setup {}
+vim.schedule(function()
+  require("codesettings").setup {}
+end)
 vim.lsp.config('*', {
   before_init = function(_, config)
-    local codesettings = require('codesettings')
-    config = codesettings.with_local_settings(config.name, config)
+    for k, v in pairs(require('codesettings').with_local_settings(config.name, config)) do
+      config[k] = v
+    end
   end,
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
   callback = function(event)
-    vim.lsp.codelens.refresh()
+    local codelens_group = vim.api.nvim_create_augroup('user-lsp-codelens-' .. event.buf, { clear = true })
+    vim.lsp.codelens.refresh { bufnr = event.buf }
     vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
-      callback = vim.lsp.codelens.refresh,
+      group = codelens_group,
+      buffer = event.buf,
+      callback = function(args)
+        vim.lsp.codelens.refresh { bufnr = args.buf }
+      end,
     })
 
     local map = function(keys, func, desc, mode)

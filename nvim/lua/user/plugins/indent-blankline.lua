@@ -11,15 +11,16 @@ require("ibl").setup {
 }
 
 -- Dirty hack to ensure cursor does not change color
-local ns_id = vim.api.nvim_create_namespace('indent_blankline')
+local ns_id = vim.api.nvim_create_namespace('cursor_color_fix')
 vim.api.nvim_create_augroup("CursorHighlightGroup", { clear = true })
 vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
   group = "CursorHighlightGroup",
   callback = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     local char = vim.api.nvim_get_current_line():sub(col + 1, col + 1)
+    local bufnr = vim.api.nvim_get_current_buf()
+    vim.api.nvim_buf_clear_namespace(bufnr, ns_id, 0, -1)
     if char == " " or char == "" then
-      local bufnr = vim.api.nvim_get_current_buf()
       vim.api.nvim_buf_set_extmark(bufnr, ns_id, line - 1, col, {
         virt_text = { { " ", "NonText" } },
         virt_text_pos = 'overlay',
