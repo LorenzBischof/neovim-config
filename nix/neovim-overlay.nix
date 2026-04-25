@@ -14,19 +14,6 @@ let
       version = src.lastModifiedDate;
     };
 
-  codesettings = pkgs.vimUtils.buildVimPlugin {
-    name = "codesettings-nvim";
-    src = pkgs.fetchFromGitHub {
-      repo = "codesettings.nvim";
-      #owner = "mrjones2014";
-      #rev = "d1b18b502e0ae8c9b9336a239f8cc18021968fb1";
-      #hash = "sha256-6IYxoXgF26Jzc8r1Gv8UsNBn3swth+wDS604lXveLgQ=";
-      owner = "lorenzbischof";
-      rev = "35cb32bd75d6478eb72b0218df71c78c05e15238";
-      hash = "sha256-VOrI1ipy0MRqp6CObFzQ1Kr/U4/9BaW7qnVfXFQ5GqA=";
-    };
-  };
-
   # Make sure we use the pinned nixpkgs instance for wrapNeovimUnstable,
   # otherwise it could have an incompatible signature when applying this overlay.
   pkgs-locked = inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
@@ -116,7 +103,7 @@ let
     lazydev-nvim
     indent-blankline-nvim
     vim-illuminate
-    codesettings
+    codesettings-nvim
   ];
 
   extraPackages = with pkgs; [
