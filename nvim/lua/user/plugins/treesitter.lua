@@ -1,5 +1,5 @@
 local treesitter = require('nvim-treesitter')
-vim.g.skip_ts_context_comment_string_module = true
+vim.g.skip_ts_context_commentstring_module = true
 
 ---@diagnostic disable-next-line: missing-fields
 treesitter.setup {}
@@ -18,7 +18,3 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'FileType' }, {
     pcall(vim.treesitter.start, args.buf)
   end,
 })
-
--- Tree-sitter based folding
--- vim.opt.foldmethod = 'expr'
--- vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'

@@ -20,7 +20,7 @@ let
 
   # This is the helper function that builds the Neovim derivation.
   mkNeovim = pkgs.callPackage ./mkNeovim.nix {
-    inherit (pkgs-locked) wrapNeovimUnstable neovimUtils;
+    inherit (pkgs-locked) wrapNeovimUnstable;
   };
 
   # A plugin can either be a package or an attrset, such as
@@ -48,7 +48,6 @@ let
         typescript
       ]
     ))
-    luasnip # snippets | https://github.com/l3mon4d3/luasnip/
     vim-beancount
     nvim-lspconfig
     # git integration plugins
@@ -56,7 +55,6 @@ let
     # ^ git integration plugins
     # telescope and extensions
     telescope-nvim # https://github.com/nvim-telescope/telescope.nvim/
-    telescope-fzy-native-nvim # https://github.com/nvim-telescope/telescope-fzy-native.nvim
     # telescope-smart-history-nvim # https://github.com/nvim-telescope/telescope-smart-history.nvim
     # ^ telescope and extensions
     # UI
@@ -67,13 +65,8 @@ let
     rustaceanvim
     # ^ language support
     # navigation/editing enhancement plugins
-    nvim-treesitter-textobjects # https://github.com/nvim-treesitter/nvim-treesitter-textobjects/
     nvim-ts-context-commentstring # https://github.com/joosepalviste/nvim-ts-context-commentstring/
     vim-sleuth
-    {
-      plugin = avante-nvim;
-      optional = true;
-    }
     # ^ navigation/editing enhancement plugins
     # debugging
     nvim-dap
@@ -87,11 +80,9 @@ let
     nvim-lint
     # ^ Useful utilities
     # libraries that other plugins depend on
-    sqlite-lua
     plenary-nvim
     nvim-web-devicons
     vim-repeat
-    lz-n
     # ^ libraries that other plugins depend on
     # bleeding-edge plugins from flake inputs
     # (mkNvimPlugin inputs.wf-nvim "wf.nvim") # (example) keymap hints | https://github.com/Cassin01/wf.nvim

@@ -1,8 +1,5 @@
 local keymap = vim.keymap
 
--- Yank from current position till end of current line
---keymap.set('n', 'Y', 'y$', { silent = true, desc = '[Y]ank to end of line' })
-
 -- Clear highlights on search when pressing <Esc> in normal mode
 keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 

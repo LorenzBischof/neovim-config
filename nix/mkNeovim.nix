@@ -7,7 +7,6 @@
   neovim-unwrapped,
   # Set by the overlay to ensure we use a compatible version of `wrapNeovimUnstable`
   wrapNeovimUnstable,
-  neovimUtils,
 }:
 with lib;
 {
@@ -66,7 +65,7 @@ let
       inherit src;
       name = "nvim-rtp-src";
       filter =
-        path: tyoe:
+        path: type:
         let
           srcPrefix = toString src + "/";
           relPath = lib.removePrefix srcPrefix (toString path);
@@ -141,18 +140,23 @@ let
   '';
 
   # Add arguments to the Neovim wrapper script
-  extraMakeWrapperArgs = builtins.concatStringsSep " " (
-    # Set the NVIM_APPNAME environment variable
-    (optional (
-      appName != "nvim" && appName != null && appName != ""
-    ) ''--set NVIM_APPNAME "${appName}"'')
-    # Add external packages to the PATH
-    ++ (optional (externalPackages != [ ]) ''--prefix PATH : "${makeBinPath externalPackages}"'')
-    # Set the LIBSQLITE_CLIB_PATH if sqlite is enabled
-    ++ (optional withSqlite ''--set LIBSQLITE_CLIB_PATH "${sqlite.out}/lib/libsqlite3.so"'')
-    # Set the LIBSQLITE environment variable if sqlite is enabled
-    ++ (optional withSqlite ''--set LIBSQLITE "${sqlite.out}/lib/libsqlite3.so"'')
-  );
+  extraMakeWrapperArgs =
+    let
+      sqliteLibExt = stdenv.hostPlatform.extensions.sharedLibrary;
+      sqliteLibPath = "${sqlite.out}/lib/libsqlite3${sqliteLibExt}";
+    in
+    builtins.concatStringsSep " " (
+      # Set the NVIM_APPNAME environment variable
+      (optional (
+        appName != "nvim" && appName != null && appName != ""
+      ) ''--set NVIM_APPNAME "${appName}"'')
+      # Add external packages to the PATH
+      ++ (optional (externalPackages != [ ]) ''--prefix PATH : "${makeBinPath externalPackages}"'')
+      # Set the LIBSQLITE_CLIB_PATH if sqlite is enabled
+      ++ (optional withSqlite ''--set LIBSQLITE_CLIB_PATH "${sqliteLibPath}"'')
+      # Set the LIBSQLITE environment variable if sqlite is enabled
+      ++ (optional withSqlite ''--set LIBSQLITE "${sqliteLibPath}"'')
+    );
 
   luaPackages = neovim-unwrapped.lua.pkgs;
   resolvedExtraLuaPackages = extraLuaPackages luaPackages;

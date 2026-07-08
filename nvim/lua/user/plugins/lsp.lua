@@ -36,10 +36,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     if client and client:supports_method('textDocument/completion') then
       vim.lsp.completion.enable(true, client.id, event.buf, {
         autotrigger = true,
-        -- Remove function signature
-        --convert = function(item)
-        --  return { abbr = item.label:gsub("%b()", "") }
-        --end,
       })
       -- TODO: use autocomplete option with Neovim 0.12
       vim.api.nvim_create_autocmd({ 'TextChangedI' }, {
@@ -102,11 +98,9 @@ vim.lsp.config('nixd', {
 
 -- Lua
 vim.lsp.enable('lua_ls')
-vim.lsp.config('lua_ls', {})
 
 -- OpenTofu / Terraform
 vim.lsp.enable('tofu_ls')
-vim.lsp.config('tofu_ls', {})
 
 -- Rego
 vim.lsp.enable('regal')

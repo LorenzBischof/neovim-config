@@ -39,7 +39,7 @@ keymap.set('n', '<leader>dc', dap.continue, { desc = "Run/Continue" })
 keymap.set('n', '<leader>do', dap.step_over, { desc = "Step Over" })
 keymap.set('n', '<leader>de', dap.step_out, { desc = "Step Out (Exit)" })
 keymap.set('n', '<leader>di', dap.step_into, { desc = "Step Into" })
-keymap.set('n', '<leader>du', dapui.toggle, { desc = "Step Into" })
+keymap.set('n', '<leader>du', dapui.toggle, { desc = "Toggle DAP UI" })
 
 
 require('dap-go').setup {}

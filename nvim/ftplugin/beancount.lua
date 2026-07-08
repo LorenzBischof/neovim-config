@@ -5,4 +5,4 @@ local root_file = vim.fs.find('main.bean', {
   type = 'file',
 })[1]
 
-vim.g.beancount_root = root_file or (buf_dir .. '/main.bean')
+vim.b.beancount_root = root_file or (buf_dir .. '/main.bean')
